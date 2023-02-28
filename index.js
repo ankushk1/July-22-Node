@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 8000;
 const bodyParser = require("body-parser");
+const db = require('./config/mongoose')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,37 +22,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   res.json(req.body);
 // });
 
-let productsArr = ["Iphone", "Laptop", "Smart Watch", "Headphones"];
+// let productsArr = ["Iphone", "Laptop", "Smart Watch", "Headphones"];
 
-app.post("/addProduct", (req, res) => {
-  const productToBeAdded = req.body.product;
-  console.log(productToBeAdded);
-  productsArr.push(productToBeAdded);
-  res.json({ message: "Product added Successfully" });
-});
+// app.post("/addProduct", (req, res) => {
+//   const productToBeAdded = req.body.product;
+//   console.log(productToBeAdded);
+//   productsArr.push(productToBeAdded);
+//   res.json({ message: "Product added Successfully" });
+// });
 
-app.delete("/delete/:name", (req, res) => {
-  // You will remove 2 elements from array start
-  // and 2 elements from index 2
-  // If we want to remove based on name of product
+// app.delete("/delete/:name", (req, res) => {
+//   // You will remove 2 elements from array start
+//   // and 2 elements from index 2
+//   // If we want to remove based on name of product
 
-  console.log(req.params.name);
-  const filteredArr = productsArr.filter((elem) => elem !== req.params.name);
-  productsArr = filteredArr;
-  res.json({ message: "Product deleted successfully" });
-});
+//   console.log(req.params.name);
+//   const filteredArr = productsArr.filter((elem) => elem !== req.params.name);
+//   productsArr = filteredArr;
+//   res.json({ message: "Product deleted successfully" });
+// });
 
-app.put("/update/:index", (req, res) => {
-  const idx = req.params.index;
-  const newProduct = req.body.product;
-  // productsArr.splice(idx, 1, newProduct);
-  productsArr[idx] = newProduct
-  res.json({ message: "Product updated Successfully" });
-});
+// app.put("/update/:index", (req, res) => {
+//   const idx = req.params.index;
+//   const newProduct = req.body.product;
+//   // productsArr.splice(idx, 1, newProduct);
+//   productsArr[idx] = newProduct
+//   res.json({ message: "Product updated Successfully" });
+// });
 
-app.get("/products", (req, res) => {
-  res.json({ products: productsArr });
-});
+// app.get("/products", (req, res) => {
+//   res.json({ products: productsArr });
+// });
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
