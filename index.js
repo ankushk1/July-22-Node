@@ -3,10 +3,13 @@ const app = express();
 const port = 8000;
 const bodyParser = require("body-parser");
 const db = require('./config/mongoose')
+const userRoutes = require('./routes/userRoutes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.use('/user', userRoutes)
 // app.get("/home", (req, res) => {
 //   res.send("<h1>Server is running on 8000</h1>");
 // });
@@ -31,6 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   res.json({ message: "Product added Successfully" });
 // });
 
+
+// app.method( "/route", () => {controller})
 // app.delete("/delete/:name", (req, res) => {
 //   // You will remove 2 elements from array start
 //   // and 2 elements from index 2
