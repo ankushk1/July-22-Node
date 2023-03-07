@@ -59,6 +59,8 @@ app.use('/user', userRoutes)
 //   res.json({ products: productsArr });
 // });
 
+app.set("privateKey", "secret")
+
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
