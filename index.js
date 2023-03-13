@@ -4,12 +4,14 @@ const port = 8000;
 const bodyParser = require("body-parser");
 const db = require('./config/mongoose')
 const userRoutes = require('./routes/userRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/user', userRoutes)
+app.use('/category', categoryRoutes)
 // app.get("/home", (req, res) => {
 //   res.send("<h1>Server is running on 8000</h1>");
 // });

@@ -14,9 +14,6 @@ exports.validateToken = async (req, res, next) => {
       if (err) {
         return res.status(400).json({ err, message: "JWT invalid" });
       }
-      console.log(
-        decoded
-      )
       req.body.userId = decoded._id
     });
 
