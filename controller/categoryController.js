@@ -8,8 +8,13 @@ exports.createCategory = async (req, res) => {
       return res.status(400).json({ message: "Category already exists" });
     }
 
+    console.log(req.body.userId);
     // Then we create the category
-    const categoryCreated = await Category.create(req.body);
+    const categoryCreated = await Category.create({
+      ...req.body,
+      createdBy: req.body.userId,
+      updatedBy: req.body.userId
+    });
 
     //If some error
     if (!categoryCreated) {
@@ -65,7 +70,7 @@ exports.updateCategory = async (req, res) => {
 
     // Update Category
     const categoryUpdated = await Category.findByIdAndUpdate(id, {
-      $set: { ...req.body }
+      $set: { ...req.body, updatedBy: req.body.userId }
     });
 
     if (!categoryUpdated) {
@@ -90,6 +95,31 @@ exports.getCategoryById = async (req, res) => {
     return res
       .status(200)
       .json({ category, message: "Category found successfully" });
+  } catch (err) {
+    return res.status(500).json({ err, message: "Internal Server Error" });
+  }
+};
+
+exports.deactivateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // If category already deactivated
+    const category = await Category.findById(id);
+    if (!category.isActive) {
+      return res.status(400).json({ message: "Category already deactivated" });
+    }
+
+    await Category.findByIdAndUpdate(id, {
+      $set: {
+        isActive: false,
+        updatedBy: req.body.userId
+      }
+    });
+
+    return res
+      .status(200)
+      .json({ message: "Category deactivated successfully " });
   } catch (err) {
     return res.status(500).json({ err, message: "Internal Server Error" });
   }
