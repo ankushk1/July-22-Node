@@ -2,17 +2,25 @@ const express = require("express");
 const app = express();
 const port = 8000;
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const db = require("./config/mongoose");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
-
+app.use(
+  cors({
+    origin: "*"
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/user", userRoutes);
 app.use("/category", categoryRoutes);
 app.use("/product", productRoutes);
+
+
+
 // app.get("/home", (req, res) => {
 //   res.send("<h1>Server is running on 8000</h1>");
 // });
